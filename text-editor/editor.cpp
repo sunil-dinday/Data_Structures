@@ -172,11 +172,25 @@ void godown()
 	curr=temp;
 
 }
+void goright()
+{
+	if(curr->next==NULL)
+		return ;
+	curr=curr->next;
+}
+void goleft()
+{
+	if(curr->prev==NULL)
+		return;
+	curr=curr->prev;
+}
 int main()
 {
 	curr=NULL;
 	upper=0;
-	string s="asdf1#a#@qwe^^23";
+	string s;
+	//getline(std::cin,s,'q');
+	s="asdf1#@ qwe<<<//23";
 	root=new doublelist();
 	curr=root;
 	(*root).ch='\n';
@@ -233,6 +247,12 @@ int main()
 				}
 				curr=temp;
 				i--;
+				break;
+			case '>':
+				goright();
+				break;	
+			case '<':
+				goleft();
 				break;
 			default:
 				if(s[i]=='#')
