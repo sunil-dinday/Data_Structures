@@ -151,9 +151,10 @@ void godown()
 	int len2=0;
 	temp=temp->next;
 	tt=temp
-;	while((*temp).ch!='\n')
+;	while((*temp).ch!='\n'&&temp->next!=NULL)
 	{
 		temp=temp->next;
+
 		
 	}
 	if(temp->next==NULL)
@@ -188,9 +189,10 @@ int main()
 {
 	curr=NULL;
 	upper=0;
+	int cnt=0;
 	string s;
 	//getline(std::cin,s,'q');
-	s="asdf1#@ qwe<<<//23";
+	s="abcdef#jeremy<<#sunil^^no?lol?byeA^^BB?bye";
 	root=new doublelist();
 	curr=root;
 	(*root).ch='\n';
@@ -216,7 +218,6 @@ int main()
 					goup();
 					i++;
 				}
-				
 				len2=getFirstLineLength();
 				doublelist *temp;
 				temp=curr;
@@ -225,9 +226,11 @@ int main()
 					len2++;
 					temp=temp->next;
 				}
-				curr=temp;
+				if((*temp).ch=='\n'&&temp->prev!=NULL)
+					curr=temp->prev;
+				else
+					curr=temp;
 				i--;
-				
 				break;
 			case '?':
 				len=getFirstLineLength();
@@ -236,15 +239,16 @@ int main()
 					godown();
 					i++;
 				}
-				
 				len2=getFirstLineLength();
-				
 				temp=curr;
 				while(len2<len&&(*temp).ch!='\n')
 				{
 					len2++;
 					temp=temp->next;
 				}
+					if((*temp).ch=='\n'&&temp->prev!=NULL)
+					temp=temp->prev;
+				else
 				curr=temp;
 				i--;
 				break;
