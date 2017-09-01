@@ -79,6 +79,22 @@ void print()
 		root=root->next;
 	}
 }
+
+int getFirstLineLength()
+{
+	int len=0;
+	doublelist *temp,*tt;
+	temp=curr;
+	//first calcualte number of character in this line from first character to
+	//the current position of the cursor
+	while((*temp).ch!='\n')
+	{
+		temp=temp->prev;
+		len++;
+	}
+	return len;
+
+}
 void goup()
 {
 	int len=0;
@@ -160,33 +176,68 @@ int main()
 {
 	curr=NULL;
 	upper=0;
-	string s="asdf1#@qwe^23";
+	string s="asdf1#a#@qwe^^23";
 	root=new doublelist();
 	curr=root;
 	(*root).ch='\n';
+	int len,len2;
+			
 	for(int i=0;i<s.length();i++)
 	{
 		switch(s[i])
 		{
 			case '/':
-			deleter();
-			break;
+				deleter();
+				break;
 			case '@':
-			if(upper==1)
-				upper=0;
-			else
-				upper=1;
-			break;
+				if(upper==1)
+					upper=0;
+				else
+					upper=1;
+				break;
 			case '^':
-			goup();
-			break;
+				len=getFirstLineLength();
+				while(s[i]=='^'&&i<s.length())
+				{
+					goup();
+					i++;
+				}
+				
+				len2=getFirstLineLength();
+				doublelist *temp;
+				temp=curr;
+				while(len2<len&&(*temp).ch!='\n')
+				{
+					len2++;
+					temp=temp->next;
+				}
+				curr=temp;
+				i--;
+				
+				break;
 			case '?':
-			godown();
-			break;
+				len=getFirstLineLength();
+				while(s[i]=='?'&&i<s.length())
+				{
+					godown();
+					i++;
+				}
+				
+				len2=getFirstLineLength();
+				
+				temp=curr;
+				while(len2<len&&(*temp).ch!='\n')
+				{
+					len2++;
+					temp=temp->next;
+				}
+				curr=temp;
+				i--;
+				break;
 			default:
-			if(s[i]=='#')
-				s[i]='\n';
-			insert(s[i]);
+				if(s[i]=='#')
+					s[i]='\n';
+				insert(s[i]);
 
 		};
 	}
